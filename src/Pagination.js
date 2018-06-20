@@ -130,22 +130,23 @@ module.exports = {
     }
   },
   methods: {
-    setPage: function(page) {
+    setPage: function(page, doEmit = true) {
       if (this.allowedPage(page)) {
-        this.paginate(page);
+        this.paginate(page, doEmit);
       }
     },
-    paginate(page) {
+    paginate(page, doEmit = true) {
       if (this.vuex) {
         this.$store.commit(`${this.for}/PAGINATE`,  page);
       } else {
         this.Page = page;
       }
 
-      this.$emit('paginate', page);
-
-      if (this.for) {
-        bus.$emit('vue-pagination::' + this.for, page);
+      if (doEmit) {
+        this.$emit('paginate', page);
+        if (this.for) {
+          bus.$emit('vue-pagination::' + this.for, page);
+        }
       }
     },
     next: function() {

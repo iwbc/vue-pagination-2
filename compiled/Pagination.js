@@ -137,21 +137,26 @@ module.exports = {
   },
   methods: {
     setPage: function setPage(page) {
+      var doEmit = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : true;
+
       if (this.allowedPage(page)) {
-        this.paginate(page);
+        this.paginate(page, doEmit);
       }
     },
     paginate: function paginate(page) {
+      var doEmit = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : true;
+
       if (this.vuex) {
         this.$store.commit(this.for + '/PAGINATE', page);
       } else {
         this.Page = page;
       }
 
-      this.$emit('paginate', page);
-
-      if (this.for) {
-        bus.$emit('vue-pagination::' + this.for, page);
+      if (doEmit) {
+        this.$emit('paginate', page);
+        if (this.for) {
+          bus.$emit('vue-pagination::' + this.for, page);
+        }
       }
     },
 
