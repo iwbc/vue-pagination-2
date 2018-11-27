@@ -74,14 +74,14 @@ module.exports = function () {
             'click': this.setChunk.bind(this, -1)
           }
         },
-        [h(
-          'a',
-          { 'class': theme.link,
-            attrs: { href: 'javascript:void(0);',
-              disabled: !!this.allowedChunkClass(-1) }
+        [h('a', { 'class': theme.link,
+          attrs: { href: 'javascript:void(0);',
+            disabled: !!this.allowedChunkClass(-1)
           },
-          ['<<']
-        )]
+          domProps: {
+            'innerHTML': this.opts.texts.prevChunk
+          }
+        })]
       );
 
       nextChunk = h(
@@ -91,14 +91,14 @@ module.exports = function () {
             'click': this.setChunk.bind(this, 1)
           }
         },
-        [h(
-          'a',
-          { 'class': theme.link,
-            attrs: { href: 'javascript:void(0);',
-              disabled: !!this.allowedChunkClass(1) }
+        [h('a', { 'class': theme.link,
+          attrs: { href: 'javascript:void(0);',
+            disabled: !!this.allowedChunkClass(1)
           },
-          ['>>']
-        )]
+          domProps: {
+            'innerHTML': this.opts.texts.nextChunk
+          }
+        })]
       );
     }
 
@@ -124,15 +124,14 @@ module.exports = function () {
                 'click': this.prev.bind(this)
               }
             },
-            [h(
-              'a',
-              { 'class': theme.link,
-                attrs: { href: 'javascript:void(0);',
-                  disabled: !!this.allowedPageClass(this.page - 1)
-                }
+            [h('a', { 'class': theme.link,
+              attrs: { href: 'javascript:void(0);',
+                disabled: !!this.allowedPageClass(this.page - 1)
               },
-              ['<']
-            )]
+              domProps: {
+                'innerHTML': this.opts.texts.prevPage
+              }
+            })]
           ), items, h(
             'li',
             { 'class': 'VuePagination__pagination-item ' + theme.item + ' ' + theme.next + ' VuePagination__pagination-item-next-page ' + this.allowedPageClass(this.page + 1),
@@ -140,15 +139,14 @@ module.exports = function () {
                 'click': this.next.bind(this)
               }
             },
-            [h(
-              'a',
-              { 'class': theme.link,
-                attrs: { href: 'javascript:void(0);',
-                  disabled: !!this.allowedPageClass(this.page + 1)
-                }
+            [h('a', { 'class': theme.link,
+              attrs: { href: 'javascript:void(0);',
+                disabled: !!this.allowedPageClass(this.page + 1)
               },
-              ['>']
-            )]
+              domProps: {
+                'innerHTML': this.opts.texts.nextPage
+              }
+            })]
           ), nextChunk, lastPage]
         ), h(
           'p',
